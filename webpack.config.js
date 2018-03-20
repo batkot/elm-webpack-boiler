@@ -4,7 +4,8 @@ const fileName = "app.js";
 const indexPath = "src/static/index.html";
 
 const path = require('path');
-const htmlWebpackPlugin = require('html-webpack-plugin')
+const cleanWebpackPlugin = require('clean-webpack-plugin');
+const htmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: "./src/index.js",
@@ -13,6 +14,12 @@ module.exports = {
         filename: fileName
     },
     plugins: [
+        new cleanWebpackPlugin([distFolder],{
+            root: __dirname,
+            exclude: [],
+            verbose: true,
+            dry: false
+        }),
         new htmlWebpackPlugin({
             template: indexPath,
             inject: "body",
