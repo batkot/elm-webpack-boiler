@@ -10,7 +10,7 @@
     "postinstall": "elm-package install -y && elm test init"
   },
   "author": "",
-  "license": "MIT",
+  "license": "WTFPL",
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",

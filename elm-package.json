@@ -1,7 +1,7 @@
 {
-    "version": "4.0.0",
-    "summary": "Example Project",
-    "repository": "https://github.com/user/project.git",
+    "version": "1.0.0",
+    "summary": "Elm + Webpack boilerplate",
+    "repository": "https://github.com/batkot/elm-webpack-boiler.git",
     "license": "MIT",
     "source-directories": [
         "src"
