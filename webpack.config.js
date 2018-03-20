@@ -1,5 +1,7 @@
+// CONFIG
 const distFolder = "dist";
 const fileName = "app.js";
+const indexPath = "src/static/index.html";
 
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin')
@@ -11,6 +13,10 @@ module.exports = {
         filename: fileName
     },
     plugins: [
-        new htmlWebpackPlugin()
+        new htmlWebpackPlugin({
+            template: indexPath,
+            inject: "body",
+            filename: "index.html"
+        })
     ]
 }
