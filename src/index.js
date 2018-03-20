@@ -1,5 +1,5 @@
 'use strict'
 
 require("./static/style.scss");
-
-var f = x => x + 1;
+var Elm = require("./Main.elm");
+var app = Elm.Main.fullscreen();

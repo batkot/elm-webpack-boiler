@@ -1,29 +1,37 @@
 // CONFIG
 const distFolder = "dist";
-const fileName = "app.js";
+const appName = "[name]-[hash].js";
 const indexPath = "src/static/index.html";
+const excludes = [/elm-stuff/, /node_modules/];
 
 const path = require('path');
 const cleanWebpackPlugin = require('clean-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const extractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const extractSass = new extractTextWebpackPlugin({
-    filename: '[name]-[contenthash].css'
+    filename: "[name]-[contenthash].css"
 });
 
 module.exports = {
     entry: "./src/index.js",
     output: {
         path: path.join(__dirname, distFolder),
-        filename: fileName
+        filename: appName
     },
     module: {
         rules: [{
             test: /\.scss$/,
-            exclude: [/elm-stuff/, /node_modules/],
+            exclude: excludes,
             use: extractSass.extract({
                 use: [ "css-loader", "sass-loader"]
             })
+        },
+        { 
+            test: /\.elm$/,
+            exclude: excludes,
+            use: {
+                loader: "elm-webpack-loader"
+            }
         }]
     },
     plugins: [

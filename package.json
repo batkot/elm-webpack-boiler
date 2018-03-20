@@ -12,6 +12,7 @@
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
+    "elm-webpack-loader": "^4.5.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^3.0.7",
     "node-sass": "^4.7.2",
