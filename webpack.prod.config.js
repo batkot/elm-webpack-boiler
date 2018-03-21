@@ -23,7 +23,19 @@ module.exports = {
             test: /\.scss$/,
             exclude: excludes,
             use: extractSass.extract({
-                use: [ "css-loader", "sass-loader"]
+                use: 
+                    [ "css-loader"
+                    , {
+                        loader: "postcss-loader",
+                        options: {
+                            plugins: function(){
+                                return [
+                                    require("autoprefixer")
+                                ];
+                            }
+                        }
+                    }
+                    , "sass-loader"]
             })
         },
         { 
