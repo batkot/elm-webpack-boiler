@@ -12,12 +12,23 @@ module.exports = {
     entry: appConfig.entryPoint,
     output: {
         path: path.join(__dirname, appConfig.buildPath),
-        filename: appConfig.appName
+        filename: '[name]-[hash].js'//--appConfig.appName
+    },
+    module: {
+        rules: [ 
+            // Elm compilation
+            {
+                test: /\.elm$/,
+                exclude: appConfig.excludes,
+                use: {
+                    loader: 'elm-webpack-loader',
+                    options: {}
+                }
+            }
+        ]
     },
     plugins: [
-        new CleanWebpackPlugin({
-            verbose: true
-        }),
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin()
     ]
 }
