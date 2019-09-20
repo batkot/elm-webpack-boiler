@@ -1,5 +1,5 @@
-'use strict'
+require('./static/theme.scss');
 
-require("./static/style.scss");
-var Elm = require("./Main.elm");
-var app = Elm.Main.fullscreen();
+const { Elm } = require('./Main.elm');
+const initSettings = { node: document.getElementById('elm-container') };
+const app = Elm.Main.init(initSettings);

@@ -2,6 +2,4 @@ module Main exposing (..)
 
 import Html
 
-
-main =
-    Html.text "Hello dude"
+main = Html.text "Hello world"

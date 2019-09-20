@@ -1,53 +1,73 @@
-// CONFIG
-const distFolder = "dist";
-const appName = "app.js";
-const indexPath = "src/static/index.html";
-const excludes = [/elm-stuff/, /node_modules/];
+const appConfig = require('./app.config');
+const path = require('path');
 
-const path = require("path");
-const webpack = require("webpack");
-const htmlWebpackPlugin = require("html-webpack-plugin");
+// Plugin for index.html generation
+// Wires up scripts and stylesheets
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+// Plugin for cleaning dist directory before build
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// Plugin for creating and hot reloading css files
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: "./src/index.js",
+    mode: 'production',
+    entry: appConfig.entryPoint,
     output: {
-        path: path.join(__dirname, distFolder),
-        filename: appName
+        path: path.join(__dirname, appConfig.buildPath),
+        filename: '[name]-[hash].js'//--appConfig.appName
     },
     module: {
-        rules: [{
-            test: /\.scss$/,
-            exclude: excludes,
-            use: [ "style-loader", "css-loader", "sass-loader"]
-        },
-        { 
-            test: /\.elm$/,
-            exclude: excludes,
-            use: [{
-                loader: "elm-hot-loader"
-            },
+        rules: [ 
+            // SASS compilation
             {
-                loader: "elm-webpack-loader",
-                options: {
-                    debug: true
-                }
-            }]
-        }]
+                test: /\.s[ac]ss$/i,
+                exclude: appConfig.excludes,
+                use: [
+                    //Create css files
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            //Hot module replace
+                            hmr: true
+                        }
+                    },
+                    //Load css
+                    'css-loader',
+                    //Compile sass to css
+                    'sass-loader'
+                ]
+            },
+            // Elm compilation
+            {
+                test: /\.elm$/,
+                exclude: appConfig.excludes,
+                use: [
+                    'elm-hot-webpack-loader',
+                    {
+                        loader: 'elm-webpack-loader',
+                        options: {}
+                    }
+                ]
+            }
+        ]
     },
     plugins: [
-        new webpack.NamedModulesPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
-        new htmlWebpackPlugin({
-            template: indexPath,
-            inject: "body",
-            filename: "index.html"
+        new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css'
+        }),
+        new HtmlWebpackPlugin({
+            template: appConfig.indexPath,
+            inject: 'body',
+            filename: 'index.html'
         })
     ],
     devServer: {
         inline: true,
-        stats: "errors-only",
-        contentBase: path.join(__dirname, "src/static/assets"),
-        port: 3000,
+        stats: 'errors-only',
+        contentBase: path.join(__dirname, "src/static"),
+        port: 3001,
         historyApiFallback: true
     }
 }

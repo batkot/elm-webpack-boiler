@@ -1,63 +1,59 @@
-// CONFIG
-const distFolder = "dist";
-const appName = "[name]-[hash].js";
-const indexPath = "src/static/index.html";
-const excludes = [/elm-stuff/, /node_modules/];
-
+const appConfig = require('./app.config');
 const path = require('path');
-const cleanWebpackPlugin = require('clean-webpack-plugin');
-const htmlWebpackPlugin = require('html-webpack-plugin');
-const extractTextWebpackPlugin = require('extract-text-webpack-plugin');
-const extractSass = new extractTextWebpackPlugin({
-    filename: "[name]-[contenthash].css"
-});
+
+// Plugin for index.html generation
+// Wires up scripts and stylesheets
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+// Plugin for cleaning dist directory before build
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// Plugin for creating and hot reloading css files
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: "./src/index.js",
+    mode: 'production',
+    entry: appConfig.entryPoint,
     output: {
-        path: path.join(__dirname, distFolder),
-        filename: appName
+        path: path.join(__dirname, appConfig.buildPath),
+        filename: '[name]-[hash].js'//--appConfig.appName
     },
     module: {
-        rules: [{
-            test: /\.scss$/,
-            exclude: excludes,
-            use: extractSass.extract({
-                use: 
-                    [ "css-loader"
-                    , {
-                        loader: "postcss-loader",
-                        options: {
-                            plugins: function(){
-                                return [
-                                    require("autoprefixer")
-                                ];
-                            }
-                        }
-                    }
-                    , "sass-loader"]
-            })
-        },
-        { 
-            test: /\.elm$/,
-            exclude: excludes,
-            use: {
-                loader: "elm-webpack-loader"
+        rules: [ 
+            // SASS compilation
+            {
+                test: /\.s[ac]ss$/i,
+                exclude: appConfig.excludes,
+                use: [
+                    //Create css files
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    //Load css
+                    'css-loader',
+                    //Compile sass to css
+                    'sass-loader'
+                ]
+            },
+            // Elm compilation
+            {
+                test: /\.elm$/,
+                exclude: appConfig.excludes,
+                use: {
+                    loader: 'elm-webpack-loader',
+                    options: {}
+                }
             }
-        }]
+        ]
     },
     plugins: [
-        new cleanWebpackPlugin([distFolder],{
-            root: __dirname,
-            exclude: [],
-            verbose: true,
-            dry: false
+        new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name]-[hash].css',
+            chunkFilename: '[id].css'
         }),
-        extractSass,
-        new htmlWebpackPlugin({
-            template: indexPath,
-            inject: "body",
-            filename: "index.html"
+        new HtmlWebpackPlugin({
+            template: appConfig.indexPath,
+            inject: 'body',
+            filename: 'index.html'
         })
     ]
 }
