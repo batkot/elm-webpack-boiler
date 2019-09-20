@@ -9,6 +9,7 @@
     "css-loader": "^3.2.0",
     "elm": "^0.19.0-no-deps",
     "elm-hot-webpack-loader": "^1.1.2",
+    "elm-test": "^0.19.0-rev6",
     "elm-webpack-loader": "^6.0.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.8.0",
@@ -21,7 +22,7 @@
   "scripts": {
     "build": "webpack --config webpack.prod.config.js",
     "dev": "webpack-dev-server --config webpack.dev.config.js --colors --hot --compress --open",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "elm-test --watch"
   },
   "author": "Tomasz Batko",
   "license": "WTFPL"
