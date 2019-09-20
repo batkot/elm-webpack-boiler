@@ -1,5 +1,5 @@
 module.exports = {
     appName:  'app.js',
-    buildPath: 'dest',
+    buildPath: 'dist',
     entryPoint: './src/index.js'
 }
