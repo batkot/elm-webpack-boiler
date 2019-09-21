@@ -29,6 +29,8 @@ module.exports = {
                     },
                     //Load css
                     'css-loader',
+                    //Add vendor specific stuff
+                    'postcss-loader',
                     //Compile sass to css
                     'sass-loader'
                 ]
