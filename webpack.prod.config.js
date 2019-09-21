@@ -35,6 +35,17 @@ module.exports = {
                     'sass-loader'
                 ]
             },
+            // Images file serving
+            {
+                test: /\.(svg|jpg|png|gif)$/,
+                loader: 'file-loader',
+                include: [
+                    path.resolve(__dirname, appConfig.staticsPath)
+                ],
+                options: {
+                    context: path.resolve(__dirname, appConfig.staticsPath)
+                }
+            },
             // Elm compilation
             {
                 test: /\.elm$/,

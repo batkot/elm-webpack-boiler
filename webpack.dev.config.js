@@ -14,7 +14,7 @@ module.exports = {
     entry: appConfig.entryPoint,
     output: {
         path: path.join(__dirname, appConfig.buildPath),
-        filename: '[name]-[hash].js'//--appConfig.appName
+        filename: appConfig.appName
     },
     module: {
         rules: [ 
@@ -38,6 +38,17 @@ module.exports = {
                     //Compile sass to css
                     'sass-loader'
                 ]
+            },
+            // Images file serving
+            {
+                test: /\.(svg|jpg|png|gif)$/,
+                loader: 'file-loader',
+                include: [
+                    path.resolve(__dirname, appConfig.staticsPath)
+                ],
+                options: {
+                    context: path.resolve(__dirname, appConfig.staticsPath)
+                }
             },
             // Elm compilation
             {
