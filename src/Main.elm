@@ -1,5 +1,16 @@
-module Main exposing (..)
+module Main exposing (main)
 
-import Html
+import Html exposing (text)
 
-main = Html.text "Hello world"
+
+type ABC
+    = A
+
+
+main =
+    function A |> text
+
+
+function : ABC -> String
+function =
+    always "Hello world"

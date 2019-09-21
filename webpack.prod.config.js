@@ -39,7 +39,9 @@ module.exports = {
                 exclude: appConfig.excludes,
                 use: {
                     loader: 'elm-webpack-loader',
-                    options: {}
+                    options: {
+                        optimize: true,
+                    }
                 }
             }
         ]
