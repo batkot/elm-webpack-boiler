@@ -1,5 +1,5 @@
 {
-  "name": "elm-webpack",
+  "name": "elm-webpack-boiler",
   "version": "1.0.0",
   "description": "Setup for Elm 0.19 and Webpack 4",
   "main": "src/index.js",
