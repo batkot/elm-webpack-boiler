@@ -55,6 +55,13 @@ module.exports = {
                 test: /\.elm$/,
                 exclude: appConfig.excludes,
                 use: [
+                    // Babel loader to enable using webpack assets in Elm
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            plugins: ['module:babel-elm-assets-plugin']
+                        }
+                    },
                     'elm-hot-webpack-loader',
                     {
                         loader: 'elm-webpack-loader',

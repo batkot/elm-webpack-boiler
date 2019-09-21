@@ -1,16 +1,12 @@
 module Main exposing (main)
 
-import Html exposing (text)
+import Html exposing (Html, text, img, div)
+import Html.Attributes exposing (src, class)
 
+import Assets exposing (elmLogoUrl)
 
-type ABC
-    = A
-
-
-main =
-    function A |> text
-
-
-function : ABC -> String
-function =
-    always "Hello world"
+main = div 
+    [ class "elm-container" ]
+    [ img [ src elmLogoUrl ] []
+    , text "Elm 0.19 Webpack4 Starter" 
+    ]

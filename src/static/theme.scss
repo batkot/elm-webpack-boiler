@@ -1,8 +1,27 @@
+$babyBlue: #89CFF0;
 ::placeholder {
     color: gray;
 }
 
 body {
-    background: url('images/elm-logo.png');
+    background: $babyBlue;
     transition: 1s;
+    margin: 0;
+    padding:0;
+    width: 100vw;
+    height: 100vh;
+
+    .elm-container {
+        margin: 0;
+        padding:0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+
+        img {
+            display: block;
+        }
+    }
 }
