@@ -9,6 +9,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // Plugin for creating and hot reloading css files
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const Webpack = require('webpack');
+
 module.exports = {
     mode: 'production',
     entry: appConfig.entryPoint,
@@ -78,6 +80,9 @@ module.exports = {
             template: appConfig.indexPath,
             inject: 'body',
             filename: 'index.html'
+        }),
+        new Webpack.DefinePlugin({
+            __GREETING__: "'Business up front'"
         })
     ]
 }
